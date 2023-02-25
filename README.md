@@ -9,5 +9,5 @@ To compute training and inference time on a certain MCU model, the corresponding
 Several assumptions were made: 
 - Weights, biases and activations are quantized to INT8. The softmax layer, present only in the CNN models, is quantized to FLOAT32. The MACCs of the softmax layer should, therefore, be FLOAT32. However, as the computations for the softmax layer are negligible in the economy of the NN, they were assumed INT8 for the sake of simplicity. 
 - When calculating peak RAM we considered that to calculate a new layer you cannot overwrite an existing layer buffer in memory, but you needed to allocate a new buffer (which contributes to total RAM).
-
+- Batch normalization layers were not considered.
 
