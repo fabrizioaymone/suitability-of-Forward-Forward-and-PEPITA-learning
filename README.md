@@ -1,9 +1,10 @@
-# Suitability of Forward-Forward learning to Tiny Devices
+# Suitability of Forward-Forward and PEPITA Learning to MLCommons-Tiny benchmarks
 This repository contains the spreadsheet("analysis.ods") of the quantitative analysis performed for the paper "Suitability of Forward-Forward and PEPITA Learning to MLCommons-Tiny benchmarks". 
 
 
 ## Brief description
-The objective of the analysis is to evaluate the performances in terms of memory usage and complexity of a learning procedure X on a certain model Y tackling a task T on a dataset D. of a learning procedure X on a certain model Y tackling a task T on a dataset D. The learning procedures are Backpropagation (BP), Forward-Forward (FF), PEPITA (PEP), MEMPEPITA (MPE). The models evaluated were respectively named DS-CNN, MobileNet, ResNet and AutoEncoder (AE). The datasets used were Speech Commands (SC), Visual Wake Words (VWW), Cifar10 and ToyADMOS. For more information, read the original paper.
+The objective of the analysis is to evaluate the performances in terms of memory usage and complexity of a learning procedure X on a certain model Y tackling a task T on a dataset D. of a learning procedure X on a certain model Y tackling a task T on a dataset D. The learning procedures are Backpropagation (BP), Forward-Forward (FF), PEPITA (PEP), MEMPEPITA (MPE). The models evaluated were respectively named DS-CNN, MobileNet, ResNet and AutoEncoder (AE). The datasets used were Speech Commands (SC), Visual Wake Words (VWW), Cifar10 and ToyADMOS. The precise structure
+and the source code of these models are publicly available in the [mlcommons/tiny repository](https://github.com/mlcommons/tiny). For more information, read the original paper.
 
 ## Methodology
 ### Assumptions
@@ -43,15 +44,24 @@ The method for calculating the peak activations memory usage during training dep
 
 To obtain the peak total RAM during training, it is sufficient to add to the peak activations memory the memory occupied by weights. During inference, RAM is composed by only activation buffers. The RAM at inference time is the same for BP, unsupervised FF, PEPITA and MEMPEPITA and consists of the maximum value of the sum of the activation buffers of two consecutive layers, while supervised FF adds to it the input activations.
 
-### 
+### Training and Inference latencies on MCUs
+
+To calculate the training and inference latencies on the STM32H735G-DK and NUCLEO-G474RE MCUs for one sample, the MACCs previously computed were multiplied by the cycles per MACC and divided by the frequency of the processor featured by the MCU. Considering the n° of samples in the dataset and the epochs originally used to train the model, training time was calculated and expressed in hours.  
+
+
+### Validation
+
+Next, the Tensorflow Lite version of each MLCommons/Tiny benchmark has been profiled with the latest version of the tool freely available named [X-CUBE-AI](https://www.st.com/en/embedded-software/x-cube-ai.html). It provided automated analysis of the models, for the forward pass, by measuring the number of MACCs and the footprint of the activation buffers for each layer, which were used to confirm the results of the theoretical analysis. It is possible to use X-CUBE-AI from the web through [STM32Cube.AI Developer Cloud](https://stm32ai-cs.st.com/home)
 
 
 ## Citation
+If you find "Suitability of Forward-Forward and PEPITA Learning to MLCommons-Tiny benchmarks" helpful for your research, please consider citing the paper.
+
 ```
 @inproceedings{
   suitability,
-  title={Suitability of Forward-Forward learning to Tiny Devices},
-  author={Pua, Danilo and Aymone, Fabrizio},
+  title={Suitability of Forward-Forward and PEPITA Learning to MLCommons-Tiny benchmarks},
+  author={Pau, Danilo and Aymone, Fabrizio},
   booktitle={Example)},
   year={2023}
 } 
