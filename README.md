@@ -12,18 +12,24 @@ The following assumptions were made:
 - When calculating peak RAM it was considered considered that to calculate a new layer it is not possible to overwrite an existing layer buffer in memory, but it is necessary to allocate a new buffer (which contributes to total RAM).
 - Batch normalization layers, present in the original models, were not considered.
 
-### Procedure
-### MACCs
+### MACCs procedure
+
 As first step, a closed formula to calculate the MACCs needed by a generic layer (fully-connected, convolutional, depthwise convolutional, etc) to perform a certain operation was expressed. The operations considered are forward pass, backward pass, weight update and other operations specific to Forward learning procedures, such as normalization and goodness for Forward-Forward and error projection for PEPITA. In such a way, given the charachteristics of a layer (e.g. number of channels in input, size of kernel), it is possible to rapidly and mechanically calculate the MACCs required by a specific operation. Therefore, for each layer its charachteristics were written down and for each operation the corresponding formula was applied to obtain the required MACCs.
 
 ![spreadsheet](figures/spreadsheet_example.png)
 
 The MACCs relative to a certain operation were summed across all layers, to obtain the MACCs required by the entire model to perform the operation. Then, the number of total MACCs for a learning procedure were calculated by summing the MACCs of the operations involved in such procedure. This was done both for training and inference.
 
-### RAM
+### RAM procedure
+The method for calculating the peak activations memory usage during training depending on the learning procedure used is shown in the following table.
+| Learning procedure | cvations                                 |
+| :------------------: | :------------------------------------------:|
+| BP and PEPITA      | sum of the activations buffers of all layers |
+| FF                 | maximum value of the sum of the activation buffers of two consecutive layers plus the input sample |
+| MEMPEPITA          | maximum value of the sum of the activation buffers of two consecutive layers and of the largest activation buffer between these two layers |
 
-
-
+The peak activations memory usage by the learning workload based on BP or PEPITA is equal to the sum of the activation buffers of all the NN layers; and for FF to the maximum value of the sum of the activation buffers of two consecutive layers plus the input sample as it needs to be stored to make negative data for the later negative pass. About MEMPEPITA to the maximum value of the sum of the activation buffers of two consecutive layers and of the largest activation buffer between these two layers. The RAM at inference time is the same for BP, unsupervised FF, PEPITA and MEMPEPITA, while the supervised FF adds the input activations as it requires more passes. To obtain the peak total RAM during training, it is sufficient to add to the peak activations memory the memory occupied by weights. During inference, RAM is composed by only activation buffers. 
+ fdd
 
 ### Notation
 
