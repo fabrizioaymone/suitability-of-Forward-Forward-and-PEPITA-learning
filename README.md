@@ -22,14 +22,16 @@ The MACCs relative to a certain operation were summed across all layers, to obta
 
 ### RAM procedure
 The method for calculating the peak activations memory usage during training depending on the learning procedure used is shown in the following table.
-| Learning procedure | cvations                                 |
+| Learning procedure   | Activations during Training                 |
 | :------------------: | :------------------------------------------:|
-| BP and PEPITA      | sum of the activations buffers of all layers |
-| FF                 | maximum value of the sum of the activation buffers of two consecutive layers plus the input sample |
-| MEMPEPITA          | maximum value of the sum of the activation buffers of two consecutive layers and of the largest activation buffer between these two layers |
+| BP and PEPITA        | sum of the activations buffers of all layers |
+| FF                   | maximum value of the sum of the activation buffers of two consecutive layers plus the input sample |
+| MEMPEPITA            | maximum value of the sum of the activation buffers of two consecutive layers and of the largest activation buffer between these two layers |
 
-The peak activations memory usage by the learning workload based on BP or PEPITA is equal to the sum of the activation buffers of all the NN layers; and for FF to the maximum value of the sum of the activation buffers of two consecutive layers plus the input sample as it needs to be stored to make negative data for the later negative pass. About MEMPEPITA to the maximum value of the sum of the activation buffers of two consecutive layers and of the largest activation buffer between these two layers. The RAM at inference time is the same for BP, unsupervised FF, PEPITA and MEMPEPITA, while the supervised FF adds the input activations as it requires more passes. To obtain the peak total RAM during training, it is sufficient to add to the peak activations memory the memory occupied by weights. During inference, RAM is composed by only activation buffers. 
- fdd
+To obtain the peak total RAM during training, it is sufficient to add to the peak activations memory the memory occupied by weights. During inference, RAM is composed by only activation buffers. The RAM at inference time is the same for BP, unsupervised FF, PEPITA and MEMPEPITA and consists of the maximum value of the sum of the activation buffers of two consecutive layers, while supervised FF adds to it the input activations.
+
+
+###
 
 ### Notation
 
