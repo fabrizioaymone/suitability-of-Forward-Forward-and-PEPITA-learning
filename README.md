@@ -3,19 +3,19 @@ This repository contains the spreadsheet("analysis.ods") of the quantitative ana
 
 
 ## Brief description
-The objective of the analysis is to evaluate the performances in terms of memory usage and complexity of a learning procedure X on a certain model Y tackling a task T on a dataset D. of a learning procedure X on a certain model Y tackling a task T on a dataset D. The learning procedures are Backpropagation (BP), Forward-Forward (FF), PEPITA (PEP), MEMPEPITA (MPE). The models evaluated were respectively named DS-CNN, MobileNet, ResNet and AutoEncoder (AE). The datasets used were Speech Commands (SC), Visual Wake Words (VWW), Cifar10 and ToyADMOS. The precise structure
+The objective of the analysis is to evaluate the performances in terms of memory usage and complexity of a learning procedure X on a certain model Y tackling a task T on a dataset D. The learning procedures are Backpropagation (BP), Forward-Forward (FF), PEPITA (PEP), MEMPEPITA (MPE). The models evaluated were respectively named DS-CNN, MobileNet, ResNet and AutoEncoder (AE). The datasets used were Speech Commands (SC), Visual Wake Words (VWW), Cifar10 and ToyADMOS. The precise structure
 and the source code of these models are publicly available in the [mlcommons/tiny repository](https://github.com/mlcommons/tiny). For more information, read the original paper.
 
 ## Methodology
 ### Assumptions
 The following assumptions were made: 
 - Weights, biases and activations are quantized to INT8. The softmax layer, present only in the CNN models, is quantized to FLOAT32. The MACCs of the softmax layer should, therefore, be FLOP32. However, as the computations for the softmax layer are negligible in the economy of considered neural networks, they were assumed INT8 for the sake of simplicity. 
-- When calculating peak RAM it was considered considered that to calculate a new layer it is not possible to overwrite an existing layer buffer in memory, but it is necessary to allocate a new buffer (which contributes to total RAM).
+- When calculating peak RAM it was considered that to calculate a new layer it is not possible to overwrite an existing layer buffer in memory, but it is necessary to allocate a new buffer (which contributes to total RAM).
 - Batch normalization layers, present in the original models, were not considered.
 
 ### MACCs procedure
 
-As first step, a closed formula to calculate the MACCs needed by a generic layer (fully-connected, convolutional, depthwise convolutional, etc) to perform a certain operation was expressed. The operations considered are forward pass, backward pass, weight update and other operations specific to Forward learning procedures, such as normalization and goodness for Forward-Forward and error projection for PEPITA. In such a way, given the characteristics of a layer (e.g. number of channels in input, size of kernel), it is possible to rapidly and mechanically calculate the MACCs required by a specific operation. Therefore, for each layer its characteristics were written down and for each operation the corresponding formula was applied to obtain the required MACCs.
+As first step, a closed formula to calculate the MACCs needed by a generic layer (fully-connected, convolutional, depthwise convolutional, etc) to perform a certain operation was expressed. The operations considered are forward pass, backward pass, weight update and other operations specific to Forward learning procedures, such as normalization and goodness for Forward-Forward and error projection for PEPITA. In such a way, given the characteristics of a layer (e.g. number of channels in input, size of kernel), it is possible to calculate the MACCs required by a specific operation. Therefore, for each layer its characteristics were written down and for each operation the corresponding formula was applied to obtain the required MACCs.
 
 ![spreadsheet](figures/spreadsheet_example.png)
 
