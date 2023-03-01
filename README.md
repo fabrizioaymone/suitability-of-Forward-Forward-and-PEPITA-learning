@@ -16,7 +16,7 @@ The following assumptions were made:
 ### MACCs
 As first step, a closed formula to calculate the MACCs needed by a generic layer (fully-connected, convolutional, depthwise convolutional, etc) to perform a certain operation was expressed. The operations considered are forward pass, backward pass, weight update and other operations specific to Forward learning procedures, such as normalization and goodness for Forward-Forward and error projection for PEPITA. In such a way, given the charachteristics of a layer (e.g. number of channels in input, size of kernel), it is possible to rapidly and mechanically calculate the MACCs required by a specific operation. Therefore, for each layer its charachteristics were written down and for each operation the corresponding formula was applied to obtain the required MACCs.
 
-![spreadsheet](assets/figures/spreadsheet_example.png)
+![spreadsheet](figures/spreadsheet_example.png)
 
 The MACCs relative to a certain operation were summed across all layers, to obtain the MACCs required by the entire model to perform the operation. Then, the number of total MACCs for a learning procedure were calculated by summing the MACCs of the operations involved in such procedure. This was done both for training and inference.
 
