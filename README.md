@@ -58,11 +58,13 @@ Next, the Tensorflow Lite version of each MLCommons/Tiny benchmark has been prof
 If you find "Suitability of Forward-Forward and PEPITA Learning to MLCommons-Tiny benchmarks" helpful for your research, please consider citing the paper.
 
 ```
-@inproceedings{
-  suitability,
-  title={Suitability of Forward-Forward and PEPITA Learning to MLCommons-Tiny benchmarks},
-  author={Pau, Danilo and Aymone, Fabrizio},
-  booktitle={Example)},
-  year={2023}
-} 
+@INPROCEEDINGS{10189239,
+  author={Pau, Danilo Pietro and Aymone, Fabrizio Maria},
+  booktitle={2023 IEEE International Conference on Omni-layer Intelligent Systems (COINS)}, 
+  title={Suitability of Forward-Forward and PEPITA Learning to MLCommons-Tiny benchmarks}, 
+  year={2023},
+  volume={},
+  number={},
+  pages={1-6},
+  doi={10.1109/COINS57856.2023.10189239}}
 ```
